@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         // Check if the player is grounded
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
