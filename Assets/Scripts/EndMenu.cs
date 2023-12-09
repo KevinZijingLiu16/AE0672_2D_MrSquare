@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EndMenu : MonoBehaviour
+namespace AE0672
 {
-    public void RestartGame()
+    public class EndMenu : MonoBehaviour //Inheritance from MonoBehaviour
     {
-        // Load the first scene in the build settings
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-    }
+        public void RestartGame()
+        {
+            // Load the first scene in the build settings
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
 
-    public void QuitGame()
-    {
-        // Quit the game
-        Application.Quit();
-    }
+        public void QuitGame()
+        {
+            // Quit the game
+            Application.Quit();
+        }
+    } 
 }

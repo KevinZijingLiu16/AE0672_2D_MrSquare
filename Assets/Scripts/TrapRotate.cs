@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace AE0672
 {
-    public class TrapRotation : MonoBehaviour
+    public class TrapRotation : MonoBehaviour //Inheritance from MonoBehaviour
     {
         public float rotationSpeed = 60.0f; // Adjust the speed of rotation as needed.
 

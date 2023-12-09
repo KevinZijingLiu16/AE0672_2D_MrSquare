@@ -4,19 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class HealthManager : MonoBehaviour
+public class HealthManager : MonoBehaviour //Inheritance from MonoBehaviour
 {
     public Image healthBar;
     public float maxHealth = 100f;
     public float health = 100f;
-    public float trapDamage = 10f; // Adjust this value as needed for trap damage.
-    public float hopeRefill = 20f; // Adjust this value as needed for hope amount.
-
+    public float trapDamage = 10f; 
+    public float hopeRefill = 20f; 
+    // the reason why we use public is because we want to expose the variable to Unity Inspector.
 
     [SerializeField] private AudioSource damageAudioSource;
     [SerializeField] private AudioSource healAudioSource;
     [SerializeField] private AudioSource deathAudioSource;
-
+    // OOP: Encapsulation - private. use [SerializeField] to expose to Unity Inspector.
     void Start()
     {
         // Initialize the player's health to the maximum value.
@@ -28,13 +28,13 @@ public class HealthManager : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Trap"))
         {
-            // The player has collided with a trap. Reduce health by the trap damage amount.
-            TakeDamage(trapDamage);
+            
+            TakeDamage(trapDamage); // reduce health
             damageAudioSource.Play();
         }
         if (collision.gameObject.CompareTag("Cube"))
         {
-            CollectHope(collision.gameObject);
+            CollectHope(collision.gameObject);// add health
             healAudioSource.Play();
         }
 
@@ -43,24 +43,24 @@ public class HealthManager : MonoBehaviour
 
     void UpdateHealthBar()
     {
-        // Update the health bar based on the player's current health.
+       
         float healthRatio = health / maxHealth;
-        healthBar.fillAmount = healthRatio;
+        healthBar.fillAmount = healthRatio; //update the health bar
     }
 
     public void TakeDamage(float damageAmount)
     {
-        // Reduce the player's health by the specified damage amount.
+        
         health -= damageAmount;
 
-        // Ensure health doesn't go below zero.
         health = Mathf.Max(health, 0f);
+        // ensure health doesn't go below zero.
 
-        // Update the health bar.
         UpdateHealthBar();
+        // Update the health bar.
 
-        // Check if the player's health has reached zero.
-        if (health <= 0f)
+        
+        if (health <= 0f)// is the player health <= 0, call Die() method, play death sound
         {
             Die();
             deathAudioSource.Play();
@@ -68,29 +68,28 @@ public class HealthManager : MonoBehaviour
     }
     public void CollectHope(GameObject hope)
     {
-        // Destroy the hope object.
+        // destroy the health object.
         Destroy(hope);
-        // Increase the player's health by the hope amount.
+        // add health
         health += hopeRefill;
 
-        // Ensure health doesn't go above the maximum value.
+        // ensure health doesn't go above the maximum value.
         health = Mathf.Clamp(health, 0f, maxHealth);
 
-        // Update the health bar.
+      
         UpdateHealthBar();
 
     }
     void Die()
     {
-        // Handle the player's death (e.g., display a game over screen, respawn, or reload the scene).
-        // For example, you can reload the current scene:
+        // reload the current scene:
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Add a Heal method here if you want to implement healing.
+   
 
     void Update()
     {
-        // Additional logic can be added here if needed.
+       
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour//Inheritance from MonoBehaviour
 {
     public float moveSpeed = 5f;
     public float jumpForce = 10f;
@@ -20,18 +20,20 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private bool isGrounded;
     private SpriteRenderer spriteRenderer;
-
+    //oop : encapsulation.
     public Transform spotlight;
 
     [SerializeField] private AudioSource jumpSound;
     [SerializeField] private AudioSource buildSound;
     [SerializeField] private AudioSource shootSound;
+    //declare a variable named jumpSound of type AudioSource.
+    //the reason why use [SerializeField] is because we want to expose the variable to Unity Inspector.
   
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>(); // Get the Rigidbody2D component attached to this object.
+        spriteRenderer = GetComponent<SpriteRenderer>(); // Get the SpriteRenderer component attached to this object.
     }
 
     void Update()
@@ -53,7 +55,7 @@ public class PlayerMovement : MonoBehaviour
             spriteRenderer.flipX = false; // Facing right
             spotlight.rotation = Quaternion.Euler(0, 0, -105);
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift))//sprint
         {
             moveSpeed = 20f;
         }
@@ -77,12 +79,13 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded )
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            // oop: create an new instance of Vector2 class. with x = rb.velocity.x, y = jumpForce.
             jumpSound.Play();
          
         }
 
 
-        // Shooting
+        // Shooting and building
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
@@ -95,7 +98,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionStay2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision) //the reason use OnCollisionStay2D instead of OnCollisionEnter2D is because i want to check if the player is still on the ground.continuously check.
     {
         // Check if the player is grounded
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
@@ -105,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnCollisionExit2D(Collision2D collision)//OnCollisionExit2D is called when the player is not on the ground.
     {
         // Check if the player is not grounded
         if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
